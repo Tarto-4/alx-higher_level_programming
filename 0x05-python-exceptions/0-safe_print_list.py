@@ -7,8 +7,8 @@ def safe_print_list(my_list=[], x=0):
             if count < x:
                 print(item, end=' ')
                 count += 1
-        print()
-        return count
-    except:
-        pass
-
+                print()
+                return count
+                except:
+                    pass
+                    
