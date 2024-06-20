@@ -1,5 +1,4 @@
 #!/usr/bin/node
-const argv0 = process.argv[2];
-const argv1 = process.argv[3];
-
-console.log(`${argv0 || 'undefined'} is ${argv1 || 'undefined'}`);
+const [nodePath, scriptPath, arg1, arg2] = process.argv;
+const requiredOutput = '${arg1} is ${arg2}';
+console.log(requiredOutput);
