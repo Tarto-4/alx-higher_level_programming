@@ -1,30 +1,31 @@
 #!/usr/bin/python3
+"""
+This script connects to a MySQL database on localhost at port 3306 and lists all
+states from the `hbtn_0e_0_usa` database, sorted in ascending order by `id`.
+"""
 
-import MySQLdb
 import sys
+import MySQLdb
 
 if __name__ == "__main__":
-    # Get database connection arguments from command line
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
+    # Connect to the database
+    db = MySQLdb.connect(host="localhost", port=3306, 
+                         user=sys.argv[1], passwd=sys.argv[2], 
+                         db=sys.argv[3])
 
-    # Establish a connection to the MySQL database
-    db = MySQLdb.connect(host="localhost", port=3306, user=username, passwd=password, db=database)
+    # Create a cursor object to execute queries
+    cur = db.cursor()
 
-    # Create a cursor object to interact with the database
-    cursor = db.cursor()
+    # Execute the SELECT query
+    cur.execute("SELECT * FROM states ORDER BY id ASC")
 
-    # Execute a SQL query to retrieve all states, ordered by id
-    cursor.execute("SELECT * FROM states ORDER BY id ASC")
+    # Fetch all rows
+    rows = cur.fetchall()
 
-    # Fetch all rows from the result set
-    rows = cursor.fetchall()
-
-    # Iterate over the rows and print each state's information
+    # Print the results
     for row in rows:
         print(row)
 
     # Close the cursor and database connection
-    cursor.close()
+    cur.close()
     db.close()
