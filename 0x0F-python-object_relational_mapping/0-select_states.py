@@ -1,31 +1,35 @@
 #!/usr/bin/python3
-"""
-This script connects to a MySQL database on localhost at port 3306 and lists all
-states from the `hbtn_0e_0_usa` database, sorted in ascending order by `id`.
-"""
-
-import sys
+"""Lists all states from the database hbtn_0e_0_usa."""
 import MySQLdb
+import os  # Import the 'os' module
 
-if __name__ == "__main__":
-    # Connect to the database
-    db = MySQLdb.connect(host="localhost", port=3306, 
-                         user=sys.argv[1], passwd=sys.argv[2], 
-                         db=sys.argv[3])
+# Retrieve database credentials from environment variables
+DB_HOST = os.getenv('HBNB_MYSQL_HOST', 'localhost')  # Default to localhost
+DB_USER = os.getenv('HBNB_MYSQL_USER')
+DB_PASSWORD = os.getenv('HBNB_MYSQL_PWD')
+DB_NAME = os.getenv('HBNB_MYSQL_DB')
 
-    # Create a cursor object to execute queries
+
+if __name__ == '__main__':
+    """Access to the database and get the states from the database."""
+
+    # Create a connection to the database using environment variables
+    db = MySQLdb.connect(host=DB_HOST, user=DB_USER,
+                         passwd=DB_PASSWORD, db=DB_NAME)
+
+    # Create a cursor object
     cur = db.cursor()
 
-    # Execute the SELECT query
-    cur.execute("SELECT * FROM states ORDER BY id ASC")
+    # Execute the SELECT query, sorting by id
+    cur.execute("SELECT * FROM states ORDER BY id ASC") 
 
     # Fetch all rows
-    rows = cur.fetchall()
+    states = cur.fetchall()  
 
-    # Print the results
-    for row in rows:
-        print(row)
+    # Iterate and print the state tuples
+    for state in states:
+        print(state) 
 
     # Close the cursor and database connection
-    cur.close()
+    cur.close() 
     db.close()
