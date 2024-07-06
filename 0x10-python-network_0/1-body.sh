@@ -1,3 +1,3 @@
 #!/bin/bash
-# send a GET request to an URL with curl, and display the body of the response
-curl -sL "$1"
+# Display the body of the response from the URL passed as argument if status is 200
+curl -s "$1" | grep "HTTP/1.1 200" > /dev/null && curl -s "$1"
