@@ -1,3 +1,3 @@
 #!/bin/bash
-# Display the body of the response from the URL passed as argument if status is 200
-curl -s "$1" | grep "HTTP/1.1 200" > /dev/null && curl -s "$1"
+# Display the body of the response from the URL passed as argument if the request was successful
+curl -s -o /dev/null -w "%{http_code}" "$1" | grep -q "200" && curl -s "$1"
