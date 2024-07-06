@@ -1,3 +1,3 @@
 #!/bin/bash
-# send a GET request to the URL using curl, and display the body of the response
-curl -sH "X-School-User-Id: 98" "$1"
+# Display the body of the response from the URL passed as argument after sending a GET request with custom header
+curl -s -H "X-School-User-Id: 98" "$1"
